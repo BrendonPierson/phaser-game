@@ -11,6 +11,7 @@ function preload() {
 
   game.load.tilemap('map', 'NSS.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'simples_pimples.png');
+  game.load.image('Steve', 'assets/Steve.png');
 }
 
 var player;
@@ -50,7 +51,7 @@ function create() {
   // layer3.resizeWorld();
 
   // The player and its settings
-  player = game.add.sprite(80, 600, 'dude');
+  player = game.add.sprite(80, 600, 'Steve');
 
   //  We need to enable physics on the player
   game.physics.arcade.enable(player);
@@ -60,9 +61,6 @@ function create() {
   // player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
 
-  //  Our two animations, walking left and right.
-  player.animations.add('left', [0, 1, 2, 3], 10, true);
-  player.animations.add('right', [5, 6, 7, 8], 10, true);
 
 
   // Make spiders
@@ -132,10 +130,10 @@ function update() {
   game.debug.spriteCoords(player, 32, 500);
 
   //  Collide the player and the stars with the platforms
-  game.physics.arcade.collide(player, platforms);
-  game.physics.arcade.collide(stars, platforms);
+  game.physics.arcade.collide(stars, layer2);
   game.physics.arcade.collide(player, spiders);
   game.physics.arcade.collide(spiders, player);    
+  game.physics.arcade.collide(spiders, layer2);    
   game.physics.arcade.collide(player, layer2);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -213,9 +211,3 @@ function followSteve(spider){
     spider.body.velocity.y = 10;
   } 
 }
-
-
-
-
-
-
