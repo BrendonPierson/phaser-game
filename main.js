@@ -5,7 +5,7 @@ function preload() {
   game.load.image('sky', 'assets/sky.png');
   game.load.image('background','assets/debug-grid-1920x1920.png');
   game.load.image('ground', 'assets/platform.png');
-  game.load.image('star', 'assets/star.png');
+  game.load.image('star', 'assets/tootsieRoll.png');
   game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
   game.load.image('spider', 'assets/spider-icon.png');
 
