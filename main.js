@@ -5,12 +5,13 @@ function preload() {
   game.load.image('sky', 'assets/sky.png');
   game.load.image('background','assets/debug-grid-1920x1920.png');
   game.load.image('ground', 'assets/platform.png');
-  game.load.image('star', 'assets/star.png');
+  game.load.image('star', 'assets/tootsieRoll.png');
   game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
   game.load.image('spider', 'assets/spider-icon.png');
 
   game.load.tilemap('map', 'NSS.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'simples_pimples.png');
+  game.load.image('Steve', 'assets/Steve.png');
 }
 
 var player;
@@ -21,6 +22,7 @@ var stars;
 var spiders;
 var score = 0;
 var scoreText;
+var healthText;
 
 var layer1;
 var layer2;
@@ -50,7 +52,7 @@ function create() {
   // layer3.resizeWorld();
 
   // The player and its settings
-  player = game.add.sprite(80, 600, 'dude');
+  player = game.add.sprite(80, 600, 'Steve');
 
   //  We need to enable physics on the player
   game.physics.arcade.enable(player);
@@ -60,9 +62,9 @@ function create() {
   // player.body.gravity.y = 300;
   player.body.collideWorldBounds = true;
 
-  //  Our two animations, walking left and right.
-  player.animations.add('left', [0, 1, 2, 3], 10, true);
-  player.animations.add('right', [5, 6, 7, 8], 10, true);
+  // Give player health
+  player.health = 3;
+
 
 
   // Make spiders
@@ -115,13 +117,26 @@ function create() {
   }
 
   //  The score
-  scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+  scoreText = game.add.text(16, 16, 'Hacker Points: 0', { fontSize: '32px', fill: '#000' });
+
+  // Health
+  healthText = game.add.text(500, 16, 'Lives: 3', { fontSize: '32px', fill: '#992d2d' });
+  healthText.fixedToCamera = true;
+  scoreText.fixedToCamera = true; 
 
   //  Our controls.
   cursors = game.input.keyboard.createCursorKeys();
 
   // Camera view that follows player
   game.camera.follow(player);
+
+
+  // Uncomment if Stretch to fill is preffered
+  // game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+
+  // Maintain aspect ratio
+  game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+  game.input.onDown.add(gofull, this);
     
 }
 
@@ -132,8 +147,7 @@ function update() {
   game.debug.spriteCoords(player, 32, 500);
 
   //  Collide the player and the stars with the platforms
-  game.physics.arcade.collide(player, platforms);
-  game.physics.arcade.collide(stars, platforms);    
+  game.physics.arcade.collide(stars, layer2);
   game.physics.arcade.collide(player, layer2);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -188,11 +202,17 @@ function collectStar (player, star) {
 
   //  Add and update the score
   score += 10;
-  scoreText.text = 'Score: ' + score;
+  scoreText.text = 'Hacker Points: ' + score;
 }
 
 function spiderDamage(player, spider){
+  player.health -= 1;
+  if (player.health <= 0) {
+    player.kill();
+    healthText.text = "Game Over";
+  }
   spider.kill();
+  healthText.text = "Lives: " + player.health;
 }
 
 function followSteve(spider){
@@ -208,8 +228,15 @@ function followSteve(spider){
   } 
 }
 
+function gofull() {
 
+  if (game.scale.isFullScreen)
+  {
+    game.scale.stopFullScreen();
+  }
+  else
+  {
+    game.scale.startFullScreen(false);
+  }
 
-
-
-
+}
