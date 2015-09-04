@@ -2,11 +2,8 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
 
-  game.load.image('sky', 'assets/sky.png');
   game.load.image('background','assets/debug-grid-1920x1920.png');
-  game.load.image('ground', 'assets/platform.png');
-  game.load.image('star', 'assets/tootsieRoll.png');
-  game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+  game.load.image('tootsieRoll', 'assets/tootsieRoll.png');
   game.load.image('spider', 'assets/spider-icon.png');
 
   game.load.tilemap('map', 'NSS.json', null, Phaser.Tilemap.TILED_JSON);
@@ -18,7 +15,7 @@ var player;
 var platforms;
 var cursors;
 
-var stars;
+var tootsieRolls;
 var spiders;
 var score = 0;
 var scoreText;
@@ -26,15 +23,11 @@ var healthText;
 
 var layer1;
 var layer2;
-var layer3;
 
 function create() {
 
   //  We're going to be using physics, so enable the Arcade Physics system
   game.physics.startSystem(Phaser.Physics.ARCADE);
-
-  //  A simple background for our game
-  game.add.sprite(0, 0, 'sky');
 
   //  Add json tilemap and create 3 layers 
   map = game.add.tilemap('map');
@@ -43,13 +36,11 @@ function create() {
 
   layer1 = map.createLayer('backgroundLayer');
   layer2 = map.createLayer('blockedLayer');
-  layer3 = map.createLayer('objectsLayer');
 
   map.setCollisionByExclusion([], true, 'blockedLayer');
 
   layer1.resizeWorld();
   layer2.resizeWorld();
-  // layer3.resizeWorld();
 
   // The player and its settings
   player = game.add.sprite(80, 600, 'Steve');
@@ -77,15 +68,11 @@ function create() {
     var y = Math.random();
     var x = Math.random();
 
-    //  Create a star inside of the 'stars' group
     var spider = spiders.create(game.world.randomX, game.world.randomY, 'spider');
 
 
     //  Let gravity do its thing
     // spider.body.gravity.y = 300;
-
-    //  This just gives each spider a slightly random bounce value
-    // spider.body.bounce.y = 0.7 + Math.random() * 0.2;
 
     spider.body.collideWorldBounds = true;
   }
@@ -95,25 +82,25 @@ function create() {
 
 
 
-  //  Finally some stars to collect
-  stars = game.add.group();
+  //  Finally some tootsoeRolls to collect
+  tootsieRolls = game.add.group();
 
-  //  We will enable physics for any star that is created in this group
-  stars.enableBody = true;
+  //  We will enable physics for any tootsieRoll that is created in this group
+  tootsieRolls.enableBody = true;
 
 
 
   //  Here we'll create 12 of them evenly spaced apart
   for (var i = 0; i < 12; i++)
   {
-    //  Create a star inside of the 'stars' group
-    var star = stars.create(i * 70, 0, 'star');
+    //  Create a star inside of the 'tootsieRolls' group
+    var tootsieRoll = tootsieRolls.create(i * 70, 0, 'tootsieRoll');
 
     //  Let gravity do its thing
-    star.body.gravity.y = 300;
+    tootsieRoll.body.gravity.y = 300;
 
-    //  This just gives each star a slightly random bounce value
-    star.body.bounce.y = 0.7 + Math.random() * 0.2;
+    //  This just gives each tootsieRoll a slightly random bounce value
+    tootsieRoll.body.bounce.y = 0.7 + Math.random() * 0.2;
   }
 
   //  The score
@@ -146,12 +133,13 @@ function update() {
   game.debug.cameraInfo(game.camera, 32, 32);
   game.debug.spriteCoords(player, 32, 500);
 
-  //  Collide the player and the stars with the platforms
-  game.physics.arcade.collide(stars, layer2);
+
+  //  Collide the player and the tootsieRoll with the platforms
+  game.physics.arcade.collide(tootsieRolls, layer2);    
   game.physics.arcade.collide(player, layer2);
 
-  //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-  game.physics.arcade.overlap(player, stars, collectStar, null, this);
+  //  Checks to see if the player overlaps with any of the tootsieRolls, if he does call the collectTootsieRoll function
+  game.physics.arcade.overlap(player, tootsieRolls, collectTootsieRoll, null, this);
 
   //  Reset the players velocity (movement)
   player.body.velocity.x = 0;
@@ -196,9 +184,11 @@ function update() {
 
 }
 
-function collectStar (player, star) {
-  // Removes the star from the screen
-  star.kill();
+
+function collectTootsieRoll (player, tootsieRoll) {
+  
+  // Removes the tootsieRoll from the screen
+  tootsieRoll.kill();
 
   //  Add and update the score
   score += 10;
