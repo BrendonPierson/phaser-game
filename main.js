@@ -133,9 +133,7 @@ function update() {
 
   //  Collide the player and the stars with the platforms
   game.physics.arcade.collide(player, platforms);
-  game.physics.arcade.collide(stars, platforms);
-  game.physics.arcade.collide(player, spiders);
-  game.physics.arcade.collide(spiders, player);    
+  game.physics.arcade.collide(stars, platforms);    
   game.physics.arcade.collide(player, layer2);
 
   //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
@@ -147,8 +145,6 @@ function update() {
 
   // Player spiders collision
   game.physics.arcade.overlap(player, spiders, spiderDamage, null, this);
-
-
 
 
   if (cursors.left.isDown)
@@ -187,14 +183,12 @@ function update() {
 }
 
 function collectStar (player, star) {
-  
   // Removes the star from the screen
   star.kill();
 
   //  Add and update the score
   score += 10;
   scoreText.text = 'Score: ' + score;
-
 }
 
 function spiderDamage(player, spider){
