@@ -9,10 +9,10 @@ function preload() {
   game.load.tilemap('map', 'NSS.json', null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles', 'simples_pimples.png');
   game.load.image('Steve', 'assets/Steve.png');
+  game.load.image('gameover', 'assets/Error1.png');
 }
 
 var player;
-var platforms;
 var cursors;
 
 var tootsieRolls;
@@ -20,6 +20,7 @@ var spiders;
 var score = 0;
 var scoreText;
 var healthText;
+var gameover;
 
 var layer1;
 var layer2;
@@ -118,7 +119,7 @@ function create() {
   game.camera.follow(player);
 
 
-  // Uncomment if Stretch to fill is preffered
+  // Uncomment if Stretch to fill is prefered
   // game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
   // Maintain aspect ratio
@@ -199,7 +200,8 @@ function spiderDamage(player, spider){
   player.health -= 1;
   if (player.health <= 0) {
     player.kill();
-    healthText.text = "Game Over";
+    var gameOverTitle = this.game.add.sprite(425,350,"gameover");
+    gameOverTitle.anchor.setTo(0.5,0.5);
   }
   spider.kill();
   healthText.text = "Lives: " + player.health;
