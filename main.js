@@ -237,22 +237,20 @@ function gofull() {
 }
 
 function gameOver() {
- if(!scoreSent){
-   var ref = new Firebase("https://spider-game.firebaseio.com/scores");
-   time = this.game.time.totalElapsedSeconds();
-   userName = ref.getAuth().facebook.displayName;
-   uid = ref.getAuth().uid;
-   profPic = ref.getAuth().facebook.profileImageURL;
-   scores = 
-     {
-       user: userName,
-       uId: uid,
-       score: time,
-       remainingLives: player.health,
-       pic: profPic
-     };
-   console.log("scores", scores);
-   ref.push(scores)
-   scoreSent = true; 
- }
+  if(!scoreSent){
+    var ref = new Firebase("https://spider-game.firebaseio.com/scores");
+    time = this.game.time.totalElapsedSeconds();
+    userName = ref.getAuth().facebook.displayName;
+    uid = ref.getAuth().uid;
+    scores = [
+      {
+        user: userName,
+        uId: uid,
+        score: time,
+      }
+    ];
+    console.log("scores", scores);
+    ref.push(scores)
+    scoreSent = true; 
+  }
 }
