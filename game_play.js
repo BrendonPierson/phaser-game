@@ -224,7 +224,7 @@ function gameOver() {
      {
        user: userName,
        uId: uid,
-       score: time,
+       score: time.toFixed(2),
        remainingLives: player.health,
        pic: profPic
      };
