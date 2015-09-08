@@ -18,7 +18,7 @@ $('#scores').click(function(){
     var source = $('#displayScores').html();
     var template = Handlebars.compile(source);
     var toDom = template(scoreObj);
-    $('#toDom').text(toDom);
+    $('#toDom').html(toDom);
     $('#toDom').toggle();
   });
 });
