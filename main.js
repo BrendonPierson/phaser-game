@@ -1,3 +1,4 @@
+
 var tootsieRollSpider = tootsieRollSpider || {};
 
 tootsieRollSpider.game = new Phaser.Game(800, 600, Phaser.AUTO, '');
@@ -30,5 +31,25 @@ var nBack_colors = 0;
 tootsieRollSpider.game.state.add('Preload', tootsieRollSpider.Preload);
 tootsieRollSpider.game.state.add('MainMenu', tootsieRollSpider.MainMenu);
 tootsieRollSpider.game.state.add('Game', tootsieRollSpider.Game);
+
+
+function gameOver() {
+  if(!scoreSent){
+    var ref = new Firebase("https://spider-game.firebaseio.com/scores");
+    time = this.game.time.totalElapsedSeconds();
+    userName = ref.getAuth().facebook.displayName;
+    uid = ref.getAuth().uid;
+    scores = [
+      {
+        user: userName,
+        uId: uid,
+        score: time,
+      }
+    ];
+    console.log("scores", scores);
+    ref.push(scores)
+    scoreSent = true; 
+  }
+}
 
 tootsieRollSpider.game.state.start('Preload');

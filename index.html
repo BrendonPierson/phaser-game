@@ -10,19 +10,33 @@
   <script src="game_play.js"></script>
 </head>
 <body>
+  <style media="screen" type="text/css">
+    .hbstmpl {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+    }
+    .htmlbutton{
+    
+    }
+  </style>
 
-<button type="button" id="scores">High Scores</button>
-<button type="button" id="restart">Restart Game</button>
+<button type="button" id="scores" class="htmlbutton">High Scores</button>
+<button type="button" id="restart" class="htmlbutton">Restart Game</button>
 <br>
 <br>
 <div id="toDom">
-
 </div>
 
   <script id='displayScores' type="text/x-handlebars-template">
   {{#each scores}}
-    {{user}} | {{score}} | <img src="{{pic}}">
+  <div class="hbstmpl">
+   <h3> {{score}} </h3>
+   <h4> {{user}}  </h4>
+    <img src="{{pic}}">
     <br>
+  </div>  
   {{/each}}
   </script>
 
