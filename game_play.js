@@ -171,17 +171,17 @@ function collectTootsieRoll (player, tootsieRoll) {
 function spiderDamage(player, spider) {
   ouch.play();
   player.health -= 1;
-  // if (player.health <= 0) {
-  //   player.kill();
+  if (player.health <= 0) {
+    player.kill();
 
-  //   //Load gameover screen on player death
-  //   var gameOverTitle = this.game.add.sprite(425,450,"gameover");
-  //   gameOverTitle.anchor.setTo(0.5,0.5);
-  //   //Temp reload page after 10 sec
-  //   // setTimeout(function(){
-  //   //     location.reload();
-  //   // }, 10000);
-  // }
+    //Load gameover screen on player death
+    var gameOverTitle = this.game.add.sprite(425,450,"gameover");
+    gameOverTitle.anchor.setTo(0.5,0.5);
+    //Temp reload page after 10 sec
+    // setTimeout(function(){
+    //     location.reload();
+    // }, 10000);
+  }
   spider.kill();
   healthText.text = "Lives: " + player.health;
 }
