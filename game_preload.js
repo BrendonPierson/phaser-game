@@ -12,7 +12,7 @@ tootsieRollSpider.Preload.prototype = {
     this.load.tilemap('map', 'NSS.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('tiles', 'simples_pimples.png');
     this.load.image('Steve', 'assets/Steve.png');
-    this.load.image('thisover', 'assets/Error1.png');
+    this.load.image('gameover', 'assets/Error1.png');
     this.load.image('goldenFan', 'assets/goldenFan.png');
     this.load.image('play_button', 'assets/play_button.png');
     this.load.audio('Kashmir', 'assets/Kashmir.mp3');
