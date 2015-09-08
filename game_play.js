@@ -3,155 +3,155 @@ var tootsieRollSpider = tootsieRollSpider || {};
 tootsieRollSpider.Game = function() {};
 
 tootsieRollSpider.Game.prototype = {
-    create: function() {
+  create: function() {
 
-      // Reset the timer that started when the menu displayed
-      this.time.reset();
-  
-
-      //  Enable the Arcade Physics system
-      this.physics.startSystem(Phaser.Physics.ARCADE);
-
-      //  Add json tilemap and create 2 layers 
-      map = this.add.tilemap('map');
-      map.addTilesetImage('NSS', 'tiles');
-
-      layer1 = map.createLayer('backgroundLayer');
-      layer2 = map.createLayer('blockedLayer');
-
-      //Set 'blackedLayer' so that player cannot pass through walls
-      map.setCollisionByExclusion([], true, 'blockedLayer');
-
-      layer1.resizeWorld();
-      layer2.resizeWorld();
-
-      // Load Steve and his starting position
-      player = this.add.sprite(80, 600, 'Steve');
-
-      //  We need to enable physics on the player
-      this.physics.arcade.enable(player);
-
-      //  Player physics properties. 
-      player.body.collideWorldBounds = true;
-
-      // Give player health
-      player.health = 3;
-
-      // Make spiders
-      spiders = this.add.group();
-      spiders.enableBody = true;
-
-      for (var i = 0; i < 20; i++) {
-        var y = Math.random();
-        var x = Math.random();
-
-        var spider = spiders.create(this.world.randomX, this.world.randomY, 'spider');
-
-        spider.body.collideWorldBounds = true;
-      }
-
-      //  Add tootsieRolls to collect
-      tootsieRolls = this.add.group();
-
-      //  Enable physics for any tootsieRoll that is created in this group
-      tootsieRolls.enableBody = true;
-
-      //  Create 12 tootsieRolls
-      for (var i = 0; i < 12; i++) {
-        //  Random placement of tootsieRolls group
-        var tootsieRoll = tootsieRolls.create(this.world.randomX, this.world.randomY, 'tootsieRoll');
-        tootsieRoll.body.collideWorldBounds = true;
-      }
-
-      //  The score
-      scoreText = this.add.text(16, 16, 'Hacker Points: 0', { fontSize: '32px', fill: '#FFF' });
-
-      // Health and Timer Text
-      healthText = this.add.text(600, 16, 'Lives: 3', { fontSize: '32px', fill: '#FFF' });
-      timerText = this.add.text(400, 16, 'Time: 0 Seconds', { fontSize: '32px', fill: '#FFF' });
-      healthText.fixedToCamera = true;
-      scoreText.fixedToCamera = true; 
-      timerText.fixedToCamera = true; 
-
-      //  Our controls
-      cursors = this.input.keyboard.createCursorKeys();
-
-      // Camera view that follows player
-      this.camera.follow(player);
+    // Reset the timer that started when the menu displayed
+    this.time.reset();
 
 
-      // Uncomment if Stretch to fill is prefered
-      // this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    //  Enable the Arcade Physics system
+    this.physics.startSystem(Phaser.Physics.ARCADE);
 
-      // Maintain aspect ratio
-      this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-      this.input.onDown.add(gofull, this);
+    //  Add json tilemap and create 2 layers 
+    map = this.add.tilemap('map');
+    map.addTilesetImage('NSS', 'tiles');
 
-      music = this.add.audio('Kashmir');
-      music.volume = .15;
-      ouch = this.add.audio('ouch');
-      ouch.volume = .15;
-      mmm = this.add.audio('mmm');
-      die = this.add.audio('die');
-      die.volume = .25;
-      end = this.add.audio('end');
+    layer1 = map.createLayer('backgroundLayer');
+    layer2 = map.createLayer('blockedLayer');
 
-      music.play();
-     
-    },
-    update: function() {
+    //Set 'blackedLayer' so that player cannot pass through walls
+    map.setCollisionByExclusion([], true, 'blockedLayer');
 
-      updateTime();
-      // Debug info
-      // this.debug.cameraInfo(this.camera, 32, 32);
-      // this.debug.spriteCoords(player, 32, 500);
+    layer1.resizeWorld();
+    layer2.resizeWorld();
+
+    // Load Steve and his starting position
+    player = this.add.sprite(80, 600, 'Steve');
+
+    //  We need to enable physics on the player
+    this.physics.arcade.enable(player);
+
+    //  Player physics properties. 
+    player.body.collideWorldBounds = true;
+
+    // Give player health
+    player.health = 3;
+
+    // Make spiders
+    spiders = this.add.group();
+    spiders.enableBody = true;
+
+    for (var i = 0; i < 20; i++) {
+      var y = Math.random();
+      var x = Math.random();
+
+      var spider = spiders.create(this.world.randomX, this.world.randomY, 'spider');
+
+      spider.body.collideWorldBounds = true;
+    }
+
+    //  Add tootsieRolls to collect
+    tootsieRolls = this.add.group();
+
+    //  Enable physics for any tootsieRoll that is created in this group
+    tootsieRolls.enableBody = true;
+
+    //  Create 12 tootsieRolls
+    for (var i = 0; i < 12; i++) {
+      //  Random placement of tootsieRolls group
+      var tootsieRoll = tootsieRolls.create(this.world.randomX, this.world.randomY, 'tootsieRoll');
+      tootsieRoll.body.collideWorldBounds = true;
+    }
+
+    //  The score
+    scoreText = this.add.text(16, 16, 'Hacker Points: 0', { fontSize: '32px', fill: '#FFF' });
+
+    // Health and Timer Text
+    healthText = this.add.text(600, 16, 'Lives: 3', { fontSize: '32px', fill: '#FFF' });
+    timerText = this.add.text(400, 16, 'Time: 0 Seconds', { fontSize: '32px', fill: '#FFF' });
+    healthText.fixedToCamera = true;
+    scoreText.fixedToCamera = true; 
+    timerText.fixedToCamera = true; 
+
+    //  Our controls
+    cursors = this.input.keyboard.createCursorKeys();
+
+    // Camera view that follows player
+    this.camera.follow(player);
 
 
-      //  Collide the player and the walls
-      this.physics.arcade.collide(player, layer2);
-      this.physics.arcade.collide(tootsieRolls, layer2);
+    // Uncomment if Stretch to fill is prefered
+    // this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
-      //  Checks to see if the player overlaps with any of the tootsieRolls, if he does call the collectTootsieRoll function
-      this.physics.arcade.overlap(player, tootsieRolls, collectTootsieRoll, null, this);
-      
+    music = this.add.audio('Kashmir');
+    music.volume = .15;
+    ouch = this.add.audio('ouch');
+    ouch.volume = .15;
+    mmm = this.add.audio('mmm');
+    die = this.add.audio('die');
+    die.volume = .25;
+    end = this.add.audio('end');
 
-      //  Reset the players velocity (movement)
-      player.body.velocity.x = 0;
-      player.body.velocity.y = 0;
+    // Maintain aspect ratio
+    this.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.input.onDown.add(gofull, this);
 
-      // Player spiders collision
-      this.physics.arcade.overlap(player, spiders, spiderDamage, null, this);
+    music.play();
+   
+  },
+  update: function() {
+
+    updateTime();
+    // Debug info
+    // this.debug.cameraInfo(this.camera, 32, 32);
+    // this.debug.spriteCoords(player, 32, 500);
 
 
-      if (cursors.left.isDown) {
-        //  Move to the left
-        player.body.velocity.x = -150;
-        player.animations.play('left');
-      }
-      else if (cursors.right.isDown) {
-        //  Move to the right
-        player.body.velocity.x = 150;
-        player.animations.play('right');
-      }
-      else if (cursors.up.isDown) {
-        player.body.velocity.y = -150;
-      }
-      else if (cursors.down.isDown) {
-        player.body.velocity.y = 150;
-      }
-      else {
-        //  Stand still
-        player.animations.stop();
-        player.frame = 4;
-      }
+    //  Collide the player and the walls
+    this.physics.arcade.collide(player, layer2);
+    this.physics.arcade.collide(tootsieRolls, layer2);
 
-      // Spider follow steve function
-      spiders.forEach(followSteve, this.physics.arcade, false, 200);
+    //  Checks to see if the player overlaps with any of the tootsieRolls, if he does call the collectTootsieRoll function
+    this.physics.arcade.overlap(player, tootsieRolls, collectTootsieRoll, null, this);
+    
 
-      if(score >= 120){
-        this.physics.arcade.overlap(player, winner, gameOver, null, this);
-      }
-    },
+    //  Reset the players velocity (movement)
+    player.body.velocity.x = 0;
+    player.body.velocity.y = 0;
+
+    // Player spiders collision
+    this.physics.arcade.overlap(player, spiders, spiderDamage, null, this);
+
+
+    if (cursors.left.isDown) {
+      //  Move to the left
+      player.body.velocity.x = -150;
+      player.animations.play('left');
+    }
+    else if (cursors.right.isDown) {
+      //  Move to the right
+      player.body.velocity.x = 150;
+      player.animations.play('right');
+    }
+    else if (cursors.up.isDown) {
+      player.body.velocity.y = -150;
+    }
+    else if (cursors.down.isDown) {
+      player.body.velocity.y = 150;
+    }
+    else {
+      //  Stand still
+      player.animations.stop();
+      player.frame = 4;
+    }
+
+    // Spider follow steve function
+    spiders.forEach(followSteve, this.physics.arcade, false, 200);
+
+    if(score >= 120){
+      this.physics.arcade.overlap(player, winner, gameOver, null, this);
+    }
+  },
     
 };
 
