@@ -14,6 +14,8 @@ function preload() {
   game.load.audio('Kashmir', 'assets/Kashmir.mp3');
   game.load.audio('ouch', 'assets/ouch.wav');
   game.load.audio('mmm', 'assets/mmm.mp3');
+  game.load.audio('die', 'assets/die.wav');
+  game.load.audio('end', 'assets/end.mp3');
 }
 
 //Declare all variables
@@ -31,6 +33,8 @@ var goldenFan;
 var music;
 var ouch;
 var mmm;
+var die;
+var end;
 
 function create() {
 
@@ -110,11 +114,15 @@ function create() {
   game.input.onDown.add(gofull, this);
 
   music = game.add.audio('Kashmir');
+  music.volume = .15;
   ouch = game.add.audio('ouch');
+  ouch.volume = .15;
   mmm = game.add.audio('mmm');
+  die = game.add.audio('die');
+  die.volume = .25;
+  end = game.add.audio('end');
 
   music.play();
-    
 }
 
 function update() {
@@ -176,6 +184,8 @@ function collectTootsieRoll (player, tootsieRoll) {
   if (score === 120) {
     var winner = this.game.add.sprite(425,450,"goldenFan");
     winner.anchor.setTo(0.5,0.5);
+    music.pause();
+    end.play('', 105, .5, false, true);
   }
 }
 
@@ -184,6 +194,8 @@ function spiderDamage(player, spider) {
   player.health -= 1;
   if (player.health <= 0) {
     player.kill();
+    die.play();
+    music.pause();
 
     //Load gameover screen on player death
     var gameOverTitle = this.game.add.sprite(425,450,"gameover");
