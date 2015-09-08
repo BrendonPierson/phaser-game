@@ -10,6 +10,7 @@ function preload() {
   game.load.image('tiles', 'simples_pimples.png');
   game.load.image('Steve', 'assets/Steve.png');
   game.load.image('gameover', 'assets/Error1.png');
+  game.load.image('goldenFan', 'assets/goldenFan.png');
 }
 
 //Declare all variables
@@ -23,6 +24,7 @@ var healthText;
 var gameover;
 var layer1;
 var layer2;
+var goldenFan;
 
 function create() {
 
@@ -87,7 +89,7 @@ function create() {
   healthText.fixedToCamera = true;
   scoreText.fixedToCamera = true; 
 
-  //  Our controls.
+  //  Our controls
   cursors = game.input.keyboard.createCursorKeys();
 
   // Camera view that follows player
@@ -159,6 +161,10 @@ function collectTootsieRoll (player, tootsieRoll) {
   scoreText.text = 'Hacker Points: ' + score;
 
   //SET UP IF CONDITION FOR WIN!
+  if (score === 120) {
+    var winner = this.game.add.sprite(425,450,"goldenFan");
+    winner.anchor.setTo(0.5,0.5);
+  }
 }
 
 function spiderDamage(player, spider) {
@@ -170,9 +176,9 @@ function spiderDamage(player, spider) {
     var gameOverTitle = this.game.add.sprite(425,450,"gameover");
     gameOverTitle.anchor.setTo(0.5,0.5);
     //Temp reload page after 10 sec
-    setTimeout(function(){
-        location.reload();
-    }, 10000)
+    // setTimeout(function(){
+    //     location.reload();
+    // }, 10000);
   }
   spider.kill();
   healthText.text = "Lives: " + player.health;
