@@ -6,13 +6,12 @@ $('#scores').click(function(){
   var fb = new Firebase("https://spider-game.firebaseio.com/scores");
   fb.orderByChild("user").on("value", function(snapshot) {
     var data = snapshot.val();
-    var users = [];
-    var scores = [];
-    for (key in data) {
-      users[users.length] = data[key].score;
-      scores[scores.length] = data[key].user;
-    }
-    console.log(users);
-    console.log(scores);
+    var scoreObj = {
+      scores: data
+    };
+    var source = $('#displayScores').html();
+    var template = Handlebars.compile(source);
+    var toDom = template(scoreObj);
+    $('#toDom').append(toDom);
   });
 });

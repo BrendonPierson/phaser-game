@@ -4,20 +4,46 @@
   <meta charset="utf-8">
   
   <title>Phaser Game</title>
+  <script src="bower_components/phaser/build/phaser.min.js"></script>
+  <script src="game_preload.js"></script>
+  <script src="game_menu.js"></script>
+  <script src="game_play.js"></script>
 </head>
 <body>
+  <style media="screen" type="text/css">
+    .hbstmpl {
+      display: inline-block;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+    }
+    .htmlbutton{
+    
+    }
+  </style>
 
-<button type="button" id="scores">High Scores</button>
-<button type="button" id="restart">Restart Game</button>
+<button type="button" id="scores" class="htmlbutton">High Scores</button>
+<button type="button" id="restart" class="htmlbutton">Restart Game</button>
 <br>
 <br>
-<div class="displayScores">
-  
+<div id="toDom">
 </div>
+
+  <script id='displayScores' type="text/x-handlebars-template">
+  {{#each scores}}
+  <div class="hbstmpl">
+   <h3> {{score}} </h3>
+   <h4> {{user}}  </h4>
+    <img src="{{pic}}">
+    <br>
+  </div>  
+  {{/each}}
+  </script>
+
   <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
   <script src="auth.js"></script>
-  <script src="bower_components/phaser/build/phaser.min.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/handlebars/handlebars.min.js"></script>
   <script src="main.js"></script>
   <script src="buttons.js"></script>
 </body>
