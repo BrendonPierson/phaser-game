@@ -88,8 +88,13 @@ tootsieRollSpider.Game.prototype = {
       this.input.onDown.add(gofull, this);
 
       music = this.add.audio('Kashmir');
+      music.volume = .15;
       ouch = this.add.audio('ouch');
+      ouch.volume = .15;
       mmm = this.add.audio('mmm');
+      die = this.add.audio('die');
+      die.volume = .25;
+      end = this.add.audio('end');
 
       music.play();
      
@@ -161,6 +166,8 @@ function collectTootsieRoll (player, tootsieRoll) {
 
   //SET UP IF CONDITION FOR WIN!
   if (score >= 120) {
+    music.pause();
+    end.play('', 105, .5, false, true);
     winner = this.game.add.sprite(425,450,"goldenFan");
     winner.anchor.setTo(0.5,0.5);
     this.physics.arcade.enable(winner);
@@ -172,6 +179,8 @@ function spiderDamage(player, spider) {
   ouch.play();
   player.health -= 1;
   if (player.health <= 0) {
+    music.pause();
+    die.play();
     player.kill();
 
     //Load gameover screen on player death

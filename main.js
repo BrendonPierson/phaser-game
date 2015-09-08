@@ -23,6 +23,8 @@ var scoreSent = false;
 var music;
 var ouch;
 var mmm;
+var die;
+var end;
 
 var nBack_frames = 0;
 var nBack_colors = 0;

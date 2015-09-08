@@ -18,6 +18,8 @@ tootsieRollSpider.Preload.prototype = {
     this.load.audio('Kashmir', 'assets/Kashmir.mp3');
     this.load.audio('ouch', 'assets/ouch.wav');
     this.load.audio('mmm', 'assets/mmm.mp3');
+    this.load.audio('die', 'assets/die.wav');
+    this.load.audio('end', 'assets/end.mp3');
   },
   create: function() {
     this.state.start('MainMenu');
