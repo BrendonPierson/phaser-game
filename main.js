@@ -2,7 +2,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create
 
 function preload() {
 
-  //Preload all images
+  //Preload all assets
   game.load.image('background','assets/debug-grid-1920x1920.png');
   game.load.image('tootsieRoll', 'assets/tootsieRoll2.png');
   game.load.image('spider', 'assets/spider-icon.png');
@@ -11,6 +11,9 @@ function preload() {
   game.load.image('Steve', 'assets/Steve.png');
   game.load.image('gameover', 'assets/Error1.png');
   game.load.image('goldenFan', 'assets/goldenFan.png');
+  game.load.audio('Kashmir', 'assets/Kashmir.mp3');
+  game.load.audio('ouch', 'assets/ouch.wav');
+  game.load.audio('mmm', 'assets/mmm.mp3');
 }
 
 //Declare all variables
@@ -28,6 +31,9 @@ var goldenFan;
 var time;
 var winner;
 var scoreSent = false;
+var music;
+var ouch;
+var mmm;
 
 function create() {
 
@@ -106,6 +112,12 @@ function create() {
   // Maintain aspect ratio
   game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.input.onDown.add(gofull, this);
+
+  music = game.add.audio('Kashmir');
+  ouch = game.add.audio('ouch');
+  mmm = game.add.audio('mmm');
+
+  music.play();
     
 }
 
@@ -167,7 +179,7 @@ function render() {
 }
 
 function collectTootsieRoll (player, tootsieRoll) {
-  
+  mmm.play();
   // Removes the tootsieRoll from the screen
   tootsieRoll.kill();
   //  Add and update the score
@@ -184,6 +196,7 @@ function collectTootsieRoll (player, tootsieRoll) {
 }
 
 function spiderDamage(player, spider) {
+  ouch.play();
   player.health -= 1;
   if (player.health <= 0) {
     player.kill();
