@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render});
 
 function preload() {
 
@@ -25,6 +25,9 @@ var gameover;
 var layer1;
 var layer2;
 var goldenFan;
+var time;
+var winner;
+var scoreSent = false;
 
 function create() {
 
@@ -79,6 +82,7 @@ function create() {
   for (var i = 0; i < 12; i++) {
     //  Random placement of tootsieRolls group
     var tootsieRoll = tootsieRolls.create(game.world.randomX, game.world.randomY, 'tootsieRoll');
+    tootsieRoll.body.collideWorldBounds = true;
   }
 
   //  The score
@@ -108,15 +112,17 @@ function create() {
 function update() {
 
   // Debug info
-  game.debug.cameraInfo(game.camera, 32, 32);
-  game.debug.spriteCoords(player, 32, 500);
+  // game.debug.cameraInfo(game.camera, 32, 32);
+  // game.debug.spriteCoords(player, 32, 500);
 
 
   //  Collide the player and the walls
   game.physics.arcade.collide(player, layer2);
+  game.physics.arcade.collide(tootsieRolls, layer2);
 
   //  Checks to see if the player overlaps with any of the tootsieRolls, if he does call the collectTootsieRoll function
   game.physics.arcade.overlap(player, tootsieRolls, collectTootsieRoll, null, this);
+  
 
   //  Reset the players velocity (movement)
   player.body.velocity.x = 0;
@@ -150,6 +156,14 @@ function update() {
 
   // Spider follow steve function
   spiders.forEach(followSteve, game.physics.arcade, false, 200);
+
+  if(score >= 120){
+    game.physics.arcade.overlap(player, winner, gameOver, null, this);
+  }
+}
+
+function render() {
+  game.debug.text('Elapsed seconds: ' + Math.floor(this.game.time.totalElapsedSeconds()), 200, 20);
 }
 
 function collectTootsieRoll (player, tootsieRoll) {
@@ -161,9 +175,11 @@ function collectTootsieRoll (player, tootsieRoll) {
   scoreText.text = 'Hacker Points: ' + score;
 
   //SET UP IF CONDITION FOR WIN!
-  if (score === 120) {
-    var winner = this.game.add.sprite(425,450,"goldenFan");
+  if (score >= 120) {
+    winner = this.game.add.sprite(425,450,"goldenFan");
     winner.anchor.setTo(0.5,0.5);
+    game.physics.arcade.enable(winner);
+    winner.enableBody = true;
   }
 }
 
@@ -204,5 +220,24 @@ function gofull() {
   }
   else {
     game.scale.startFullScreen(false);
+  }
+}
+
+function gameOver() {
+  if(!scoreSent){
+    var ref = new Firebase("https://spider-game.firebaseio.com/scores");
+    time = this.game.time.totalElapsedSeconds();
+    userName = ref.getAuth().facebook.displayName;
+    uid = ref.getAuth().uid;
+    scores = [
+      {
+        user: userName,
+        uId: uid,
+        score: time,
+      }
+    ];
+    console.log("scores", scores);
+    ref.push(scores)
+    scoreSent = true; 
   }
 }
