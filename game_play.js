@@ -178,19 +178,19 @@ function collectTootsieRoll (player, tootsieRoll) {
 function spiderDamage(player, spider) {
   ouch.play();
   player.health -= 1;
-  if (player.health <= 0) {
-    music.pause();
-    die.play();
-    player.kill();
-
-    //Load gameover screen on player death
-    var gameOverTitle = this.game.add.sprite(425,450,"gameover");
-    gameOverTitle.anchor.setTo(0.5,0.5);
-    //Temp reload page after 10 sec
-    // setTimeout(function(){
-    //     location.reload();
-    // }, 10000);
-  }
+  // if (player.health <= 0) {
+  //   music.pause();
+  //   die.play();
+  //   player.kill();
+  //   this.state.start('End');
+  //   //Load gameover screen on player death
+  //   var gameOverTitle = this.game.add.sprite(425,450,"gameover");
+  //   gameOverTitle.anchor.setTo(0.5,0.5);
+  //   //Temp reload page after 10 sec
+  //   // setTimeout(function(){
+  //   //     location.reload();
+  //   // }, 10000);
+  // }
   spider.kill();
   healthText.text = "Lives: " + player.health;
 }
@@ -223,22 +223,24 @@ function updateTime(){
 }
 
 function gameOver() {
- if(!scoreSent){
-   var ref = new Firebase("https://spider-game.firebaseio.com/scores");
-   time = this.game.time.totalElapsedSeconds();
-   userName = ref.getAuth().facebook.displayName;
-   uid = ref.getAuth().uid;
-   profPic = ref.getAuth().facebook.profileImageURL;
-   scores = 
-     {
-       user: userName,
-       uId: uid,
-       score: time.toFixed(2),
-       remainingLives: player.health,
-       pic: profPic
-     };
-   console.log("scores", scores);
-   ref.push(scores)
-   scoreSent = true; 
+  this.state.start('Win');
+  if(!scoreSent){
+    $('#toDom').slideToggle('slow');
+    var ref = new Firebase("https://spider-game.firebaseio.com/scores");
+    time = this.game.time.totalElapsedSeconds();
+    userName = ref.getAuth().facebook.displayName;
+    uid = ref.getAuth().uid;
+    profPic = ref.getAuth().facebook.profileImageURL;
+    scores = 
+      {
+        user: userName,
+        uId: uid,
+        score: time.toFixed(2),
+        remainingLives: player.health,
+        pic: profPic
+      };
+    console.log("scores", scores);
+    ref.push(scores)
+    scoreSent = true; 
  }
 }

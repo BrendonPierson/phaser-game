@@ -8,6 +8,10 @@
   <script src="game_preload.js"></script>
   <script src="game_menu.js"></script>
   <script src="game_play.js"></script>
+  <script src="game_end.js"></script>
+  <script src="game_win.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body>
  <style media="screen" type="text/css">
@@ -21,13 +25,16 @@
    
    }
 
+   #toDom {
+    display: none;
+   }
    img {
     border-radius: 100%;
    }
  </style>
 
-<button type="button" id="scores">High Scores</button>
-<button type="button" id="restart">Restart Game</button>
+<button type="button" class="btn btn-primary btn-lg" id="scores">High Scores</button>
+<button type="button" class="btn btn-primary btn-lg" id="restart">Restart Game</button>
 <br>
 <br>
 <div id="toDom">
@@ -49,6 +56,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
   <script src="auth.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="bower_components/handlebars/handlebars.min.js"></script>
   <script src="main.js"></script>
   <script src="buttons.js"></script>
