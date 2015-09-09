@@ -1,0 +1,12 @@
+{
+  "name": "modules",
+  "version": "0.1.0",
+  "devDependencies": {
+    "http-server": "^0.8.0"
+  },
+    "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install",
+    "start": "http-server -o -a localhost -p 8000 -c-1 ./"
+  }
+}
