@@ -9,7 +9,7 @@ var player;
 var cursors;
 var tootsieRolls;
 var spiders;
-var score = 120;
+var score = 0;
 var scoreText;
 var healthText;
 var timerText = 0;
