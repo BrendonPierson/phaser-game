@@ -8,7 +8,6 @@ tootsieRollSpider.Game.prototype = {
     // Reset the timer that started when the menu displayed
     this.time.reset();
 
-
     //  Enable the Arcade Physics system
     this.physics.startSystem(Phaser.Physics.ARCADE);
 
