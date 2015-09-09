@@ -149,7 +149,7 @@ tootsieRollSpider.Game.prototype = {
 
     if(score >= 120){
       this.physics.arcade.overlap(player, winner, gameOver, null, this);
-    }
+    } 
   },
     
 };
@@ -179,6 +179,7 @@ function spiderDamage(player, spider) {
   player.health -= 1;
   if (player.health <= 0) {
     music.pause();
+    end.pause();
     die.play();
     player.kill();
     this.state.start('End');

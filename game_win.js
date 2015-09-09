@@ -6,7 +6,7 @@ tootsieRollSpider.Win.prototype = {
     create: function() {
         this.game.stage.backgroundColor = '#707070';
         this.game.add.text(100,20, 'Congratulations!\n', {font:'40px Arial', fill: '#fff'});
-        this.game.add.text(100, 90, 'You were able to get the golden fan in' + this.game.time.totalElapsedSeconds() + ' seconds.\n', {font: '14px Arial', fill: '#fff'}); 
+        this.game.add.text(100, 90, 'You were able to get the golden fan in ' + this.game.time.totalElapsedSeconds() + ' seconds.\n', {font: '14px Arial', fill: '#fff'}); 
         this.game.add.text(100,130, 'Check the leader board to see if you set a new high score.\n', {font: '14px Arial', fill: '#fff'});
         this.game.add.text(100,170, 'Or press the reset button and try again.\n', {font: '14px Arial', fill: '#fff'});
         // this.game.add.text(100,210, 'Good luck, use the arrow keys to navigate. \n', {font: '14px Arial', fill: '#fff'});                
